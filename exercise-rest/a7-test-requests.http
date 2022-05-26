@@ -1,0 +1,213 @@
+### Request 1: Create an exercise
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Squat",
+    "reps": 0,
+    "weight": 30,
+    "unit": "lbs",
+    "date": "01-18-22"
+}
+
+### Request 2: Create another exercise
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": 12,
+    "weight": 25,
+    "unit": "kgs",
+    "date": "01-18-22"
+}
+
+### Request 3: Create an exercise
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Squat",
+    "reps": 12,
+    "weight": 30,
+    "unit": "lbs",
+    "date": "01-25-22"
+}
+
+### Request 4: Create another exercise
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": 10,
+    "weight": 30,
+    "unit": "kgs",
+    "date": "01-25-22"
+}
+
+### Request 5: Create with missing property 400 status code
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": 12,
+    "weight": 25,
+    "date": "01-18-22"
+}
+
+### Request 6: Create with missing property 400 status code
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": 12,
+    "weight": 25,
+    "unit": "kgs"
+}
+
+### Request 7: Create with invalid property 400 status code
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": 12,
+    "weight": 0,
+    "unit": "kgs",
+    "date": "01-18-22"
+}
+
+### Request 8: Create with invalid property 400 status code
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": "not a number",
+    "weight": 1,
+    "unit": "kgs",
+    "date": "01-18-22"
+}
+
+
+### Request 9: Create with invalid property 400 status code
+POST http://localhost:3000/exercises HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": 18,
+    "weight": 1,
+    "unit": "kgs",
+    "date": "aa-18-22"
+}
+
+
+### Request 10: Retrieve should return the 4 exercises we have created
+GET http://localhost:3000/exercises HTTP/1.1
+
+
+### Request 11: Update the Deadlift with date 01-25-22. Set reps to 12 and 
+###     unit to lbs (weight remains 30 and date remains 01-25-22)
+### NOTE: Change the value of ID in the following URL to the ID assigned
+###     to Deadlift with date 01-25-22. You can find that ID from the
+###     previous retrieve request. It would be more convenitent to replace
+###     all occurrences of the ID value in the file, since later tests
+###     also use the ID for Deadlift with date 01-25-22
+PUT http://localhost:3000/exercises/6281b322c7c796ea344f05ee HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": 12,
+    "weight": 30,
+    "unit": "lbs",
+    "date": "01-25-22"
+}
+
+### Request 12: Verify that the previous update set reps to 12 and unit
+###     to lbs (weight remains 30)
+### NOTE: Change the value of ID in the following URL to the ID assigned
+###     to Deadlift with date 01-25-22.
+GET http://localhost:3000/exercises/6281b322c7c796ea344f05ee HTTP/1.1
+
+
+### Request 13: Update with missing property. 400 status code
+### NOTE: Change the value of ID in the following URL to the ID assigned
+###     to Deadlift with date 01-25-22.
+PUT http://localhost:3000/exercises/6281b322c7c796ea344f05ee HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": 12,
+    "weight": 25,
+    "unit": "kgs"
+}
+
+
+### Request 14: Update with invalid property. 400 status code
+### NOTE: Change the value of ID in the following URL to the ID assigned
+###     to Deadlift with date 01-25-22.
+PUT http://localhost:3000/exercises/6281b322c7c796ea344f05ee HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": "not a number",
+    "weight": 1,
+    "unit": "kgs",
+    "date": "01-18-22"
+}
+
+
+### Request 15: Update with invalid property. 400 status code
+### NOTE: Change the value of ID in the following URL to the ID assigned
+###     to Deadlift with date 01-25-22.
+PUT  http://localhost:3000/exercises/6281b322c7c796ea344f05ee HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": 18,
+    "weight": 1,
+    "unit": "kgs",
+    "date": "aa-18-22"
+}
+
+### Request 16: Update for non-existent ID. 404 status code
+PUT  http://localhost:3000/exercises/6281146f945176f317005603 HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Deadlift",
+    "reps": 12,
+    "weight": 30,
+    "unit": "lbs",
+    "date": "06-25-21"
+}
+
+
+### Request 17: Retreive for non-existent ID. 404 status code
+GET  http://localhost:3000/exercises/6281146f945176f317005603 HTTP/1.1
+
+### Request 11: Delete the Deadlift with date 01-25-22.
+### NOTE: Change the value of ID in the following URL to the ID assigned
+###     to Deadlift with date 01-25-22. You can find that ID from the
+##      previous retrieve request
+DELETE http://localhost:3000/exercises/6281b322c7c796ea344f05ee HTTP/1.1
+
+
+### Request 18: Verify that the Deadlift on 01-25-22 has been deleted. 404 status code
+GET http://localhost:3000/exercises/6281b322c7c796ea344f05ee HTTP/1.1
+
+
+### Request 19: Verify that the Deadlift on 01-25-22 has been deleted
+GET http://localhost:3000/exercises HTTP/1.1
+
+
+### Request 20: Delete for non-existent ID. 404 status code
+DELETE http://localhost:3000/exercises/6281b322c7c796ea344f05ee HTTP/1.1
