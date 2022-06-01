@@ -27,36 +27,46 @@ function validate(req, res, name, reps, weight, unit, date) {
     // === undefined for empty property
     if (name === undefined || reps === undefined || weight === undefined || unit === undefined || date === undefined) {
         res.status(400).json( { Error: 'Invalid request' } )
+        return 0
     }
-    // === null b/c empty string 
-    else if (name.length < 1 || name === null) {
+    // empty string value 
+    else if (name.length < 1) {
         res.status(400).json( { Error: 'Invalid request' } )
+        return 0
     }
-    else if (reps <= 0) {
+    else if (reps <= 0 || typeof(reps) !== "number") {
         res.status(400).json( { Error: 'Invalid request' } )
+        return 0
     }
-    else if (weight <= 0) {
+    else if (weight <= 0 || typeof(weight) !== "number") {
         res.status(400).json( { Error: 'Invalid request' } )
+        return 0
     }
     else if (unit !== 'kgs' && unit !== 'lbs') {
         res.status(400).json( { Error: 'Invalid request' } )
+        return 0
     }
     else if (isDateValid(date) === false) {
         res.status(400).json( { Error: 'Invalid request' } )
+        console.log('invalid date')
+        return 0
     }
 
-    return
+    return 
 }
 
 /**
  * CREATE a new exercise with name, reps, weight, unit and date
  */
 app.post('/exercises', (req, res) => {
-    validate(req, res, req.body.name, req.body.reps, req.body.weight, req.body.unit, req.body.date)
+    if (validate(req, res, req.body.name, req.body.reps, req.body.weight, req.body.unit, req.body.date) === 0) {
+        return
+    }
 
     exercises.createExercise(req.body.name, req.body.reps, req.body.weight, req.body.unit, req.body.date)
         .then(exercise => {
             res.status(201).json(exercise)
+            return
         })
         .catch(error => {
             console.error(error);
@@ -64,6 +74,7 @@ app.post('/exercises', (req, res) => {
             // A better approach will be to examine the error and send an
             // error status code corresponding to the error.
             res.status(400).json({ Error: 'Request failed' });
+            return
         })
 });
 
@@ -76,11 +87,13 @@ app.get('/exercises', (req, res) => {
     let filter = {};
     exercises.findExercise(filter, '', 0)
         .then(exercise => {
-            res.send(exercises);
+            res.send(exercise);
+            return
         })
         .catch(error => {
             console.error(error);
             res.send({ Error: 'Request failed' });
+            return
         });
 });
 
@@ -93,45 +106,75 @@ app.get('/exercises', (req, res) => {
         .then(exercise => { 
             if (exercise !== null) {
                 res.json(exercise);
+                return
             } else {
                 res.status(404).json({ Error: 'Not found' });
+                return
             }         
          })
         .catch(error => {
             res.status(400).json({ Error: 'Request failed' });
+            return
         });
 });
 
 // UPDATE/replaces exercise by id
 app.put('/exercises/:_id', (req, res) => {
-    exercises.replaceExercise(req.params._id, req.body.name, req.body.reps, req.body.weight, req.body.unit, req.body.date)
-        .then(numUpdated => {
-            // if numUpdated === 1 --> then found 
-            if (numUpdated === 1) {
-                res.json({ _id: req.params._id, name: req.body.name, reps: req.body.reps, weight: req.body.weight, unit: req.body.unit, date: req.body.date })
+
+    // first check if id exists 
+    const exerciseId = req.params._id;
+    exercises.findExerciseById(exerciseId)
+        .then(exercise => { 
+            if (exercise !== null) {
+                // sceond, validate request parameters 
+                if (validate(req, res, req.body.name, req.body.reps, req.body.weight, req.body.unit, req.body.date) === 0) {
+                    return
+                }
+
+                // after both checks, perform update CRUD operation
+                exercises.replaceExercise(req.params._id, req.body.name, req.body.reps, req.body.weight, req.body.unit, req.body.date)
+                .then(numUpdated => {
+                    // if all 5 parameters exist AND numUpdated === 1 --> then found 
+                    if (numUpdated === 1) {
+                        res.json({ _id: req.params._id, name: req.body.name, reps: req.body.reps, weight: req.body.weight, unit: req.body.unit, date: req.body.date })
+                    } else {
+                        res.status(404).json({ Error: 'Not found' });
+                        return
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    res.status(400).json({ Error: 'Invalid request' });
+                    return
+                });
             } else {
                 res.status(404).json({ Error: 'Not found' });
-            }
+                return
+            }         
         })
         .catch(error => {
-            console.error(error);
-            res.status(400).json({ Error: 'Invalid request' });
+            res.status(400).json({ Error: 'Request failed' });
+            return
         });
+
 });
 
 // DELETES exercise by id
 app.delete('/exercises/:_id', (req, res) => {
-    exercises.deleteById(req.params._id)
+    exercises.deleteExercise(req.params._id)
         .then(deletedCount => {
             if (deletedCount === 1) {
                 res.status(204).send();
+                return
             } else {
                 res.status(404).json({ Error: 'Not found' });
+                return
             }
         })
         .catch(error => {
             console.error(error);
             res.send({ error: 'Request failed' });
+            return
         });
 });
 

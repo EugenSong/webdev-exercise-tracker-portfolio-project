@@ -55,8 +55,8 @@ const replaceExercise = async (_id, name, reps, weight, unit, date) => {
     return result.modifiedCount
 }
 
-const deleteExercise = async (filter) => {
-    const result = await Exercise.deleteMany(filter);
+const deleteExercise = async (_id) => {
+    const result = await Exercise.deleteMany({_id:_id});
     return result.deletedCount; 
 }
 
