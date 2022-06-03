@@ -1,9 +1,36 @@
 body {
-  background-color: rgb(255,255,255);
+  background-color: #f9dbbd;
+  font-family: "Lucida Console", Courier, monospace;
+  color: #6d6875;
+  margin: 5em;
+  padding: 1em;
+}
+
+.form {
+  font-family: "Lucida Console", Courier, monospace;
 }
 
 .App {
   text-align: center;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.subtitle {
+  font-weight:bold;
+}
+
+.App-link {
+  text-decoration: none;
+  color: crimson;
+  font-weight: bold; 
+  width: 300px;
+  height: 100px;
+  background: #f7d6e0;
+  border-radius: 1px;
+
 }
 
 .App-header {
@@ -16,8 +43,15 @@ body {
   color: black;
 }
 
-.App-link {
-  color: #61dafb;
+#exercises {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+tr, th {
+  color: rgb(110, 11, 87);
+  text-align: center;
+  padding: 1em;
 }
 
 td, th {
@@ -25,14 +59,16 @@ td, th {
   padding: 8px;
 }
 
-tr:nth-child(even){background-color: #f2f2f2;}
-
-tr:hover {background-color: #ddd;}
+tr, td {
+  background-color: #fcb1a6;
+  text-align: center;
+  padding: 1em;
+}
 
 th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #04AA6D;
-  color: white;
+  background-color: #ffa5ab;
+  color: rgb(110, 11, 87);
 }

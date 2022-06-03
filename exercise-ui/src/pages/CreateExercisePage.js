@@ -35,16 +35,19 @@ function CreateExercisePage() {
         <div>
             <h1>Add Exercise</h1>
             <input
+                className='form'
                 type="text"
                 placeholder="Enter exercise name"
                 value={name}
                 onChange={e => setName(e.target.value)} />
             <input
+                className='form'
                 type="number"
                 placeholder="Enter number of reps"
                 value={reps}
                 onChange={e => setReps(e.target.valueAsNumber)} />
             <input
+                className='form'
                 type="number"
                 palceholder="Enter weight"
                 value={weight}
@@ -54,11 +57,12 @@ function CreateExercisePage() {
                 <option value="kgs">kgs</option>
             </select>
             <input
+                className='form'
                 type="text"
                 placeholder="Enter date: MM-DD-YY"
                 value={date}
                 onChange={e => setDate(e.target.value)} />
-            <button onClick={addExercise}>Submit Exercise</button>
+            <button className='form' onClick={addExercise}>Submit Exercise</button>
             <Navigation />
 
         </div>

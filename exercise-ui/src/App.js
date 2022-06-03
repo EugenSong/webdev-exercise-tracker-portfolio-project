@@ -16,8 +16,8 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>Your Personal Workout Log</h1>
-        <p>Enter your exercise and specify each field.</p>
+        <h1 className='title'>Your Personal Workout Log</h1>
+        <p className='subtitle'>Enter your exercise and specify each field.</p>
 
         <Router>
           <div className="App-router">
