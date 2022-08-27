@@ -2,7 +2,7 @@ A fullstack Exercise Logging single-page web application utilizing the MERN stac
 
 Topics include: REST API; CRUD operations for MongoDB; React components, promises and async
 
-Run the following commands in exercise-ui and in exercise-rest.
+To play around with, run the following commands in exercise-ui and in exercise-rest.
 
 ` 1) npm install`
 
