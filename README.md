@@ -8,10 +8,10 @@ To play around with, run the following commands in exercise-ui and in exercise-r
 
 `2) npm start`
 
-`Demo:`
+`Demo`
 ![](https://i.imgur.com/NK3U7rj.gif)
 
-`MongoDB Persistance:`
+`MongoDB Persistance`
 ![](https://i.imgur.com/27vSC0K.jpg)
 
 `Create Page`
