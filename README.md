@@ -16,7 +16,9 @@ To play around with, run the following commands in exercise-ui and in exercise-r
 
 `Create Page`
 ![](https://i.imgur.com/cLDAWlA.png)
+
 `Edit/Update Page`
 ![](https://i.imgur.com/PktzUsW.png)
+
 `Delete`
 ![](https://i.imgur.com/2AGm2Ie.gif)
